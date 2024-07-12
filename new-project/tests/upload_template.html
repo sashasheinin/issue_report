@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+max-width: 36em;
+margin: auto;
+font-family: Roboto, serif;
+line-height: 1.5;
+}
+
+code {
+font-family: Roboto Mono, monospace;
+font-size: 90%;
+}
+
+.picker {
+background-color: #eee;
+padding: 1em;
+}
+    </style>
+</head>
+
+<body>
+
+  <h1><code>&lt;input webkitdirectory&gt;</code> demo</h1>
+
+  <div class="picker"><input type="file" id="picker" name="fileList" webkitdirectory multiple></div>
+
+  <ul id="listing"></ul>
+
+<script>
+  let picker = document.getElementById('picker');
+  let listing = document.getElementById('listing');
+
+  picker.addEventListener('change', e => {
+    for (let file of Array.from(e.target.files)) {
+      let item = document.createElement('li');
+      item.textContent = file.webkitRelativePath;
+      listing.appendChild(item);
+    };
+  });
+</script>
+</body>
+
+</html>
