@@ -6,15 +6,19 @@ test('Upload folder', async ({ page }) => {
   await page.goto(`file://${html}`);
   let local_path = path.join(__dirname, 'folder');
   console.log(local_path);
-  await page.locator('input[type=file]').setInputFiles('/Users/sashas/Documents/bug_repo/new-project/tests/folder');
+  await page.locator('input[type=file]').setInputFiles(local_path);
   console.log('Uploaded')
 });
 
 test('Upload file', async ({ page }) => {
   let html = path.join(__dirname, 'upload_template.html')  
   await page.goto(`file://${html}`);
-  let local_path = path.join(__dirname, 'folder/first_file.json');
+  let local_path = path.join(__dirname, 'test_f');
+  local_path = process.cwd() + '/tests/test_f'
   console.log(local_path);
-  await page.locator('input[type=file]').setInputFiles('/Users/sashas/Documents/bug_repo/new-project/tests/folder/first_file.json');
+  const fileChooserPromise = page.waitForEvent('filechooser');
+  await page.locator('input[type=file]').click();
+  const fileChooser = await fileChooserPromise;
+  await fileChooser.setFiles(local_path);
   console.log('Uploaded')
 });
